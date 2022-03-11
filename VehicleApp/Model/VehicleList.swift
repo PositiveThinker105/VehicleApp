@@ -8,7 +8,6 @@
 import Foundation
 
 struct VehicleList:Decodable {
-    //let count: Int
     let results:[Vehicle]
     
 }
