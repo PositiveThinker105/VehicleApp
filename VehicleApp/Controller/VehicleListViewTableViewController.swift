@@ -11,14 +11,12 @@ import UIKit
 class VehicleListViewTableViewController: UITableViewController {
     
     private var vehicleListVM :VehicleVListiewModel!
-    let url = URL(string:
-        "https://swapi.dev/api/vehicles")!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Vehicle"
         setUp()
-        // Do any additional setup after loading the view.
     }
     
 
@@ -34,7 +32,7 @@ class VehicleListViewTableViewController: UITableViewController {
     // MARK: - SETUP
     func setUp(){
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        WebService().getAllList(url: url){articles in
+        WebService(urlString: VehicleConstants.vehicleServiceURLString).getAllList(){articles in
             
             if let articles = articles{
                 self.vehicleListVM = VehicleVListiewModel(vehicleList: articles)

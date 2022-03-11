@@ -8,31 +8,46 @@
 import Foundation
 public class WebService{
     
-    let network = NetworkManager()
+    private var urlString: String
+    private var urlSession:URLSession
+
+    init(urlString:String,urlSession:URLSession = .shared){
+        self.urlString = urlString
+        self.urlSession = urlSession
+
+    }
     /**
-     Fetch News Api
+     Fetch Vehicle Api
      
      - Parameters:
      - Nil
      
-     - Returns: News Articles data with Title and Description
+     - Returns: Load vehicle details with name and model
      */
     
-    func getAllList(url:URL,completion: @escaping ([Vehicle]? )->()){
-        
-        network.makeRequestCall(toURL: url, withHttpMethod: .get) { (results) in
-            if let _ = results.data, let _ = results.response {
-                if let data = results.data{
-                                print(data)
-                                let vehicleList = try? JSONDecoder().decode(VehicleList.self, from: data)
-                
-                                if vehicleList != nil{
-                                    completion(vehicleList?.results)
-                                }
-                            }
-            }
+    func getAllList(completion: @escaping ([Vehicle]? )->()){
+
+        guard let url = URL(string: urlString)else{
+            return
         }
 
-        
+        let request = URLRequest(url: url)
+        let dataTask = urlSession.dataTask(with: request){ data,response,error in
+            if let error = error{
+                print(error.localizedDescription)
+                completion(nil)
+            }
+            else if let data = data{
+                print(data)
+                let vehicleList = try? JSONDecoder().decode(VehicleList.self, from: data)
+
+                if vehicleList != nil{
+                    completion(vehicleList?.results)
+                }
+            }
+            }
+        dataTask.resume()
+
     }
+
 }
