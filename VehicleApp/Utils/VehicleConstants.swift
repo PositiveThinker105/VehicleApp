@@ -7,7 +7,7 @@
 
 import Foundation
 struct VehicleConstants{
-    static let vehicleServiceURLString = "https://swapi.dev/api/vehicles"
-    static let vehicleListCount = 10
-    static let urlSessionTimeout = 5
+    static let vehicleServiceURLString:String = "https://swapi.dev/api/vehicles"
+    static let vehicleListCount :Int = 10
+    static let urlSessionTimeout:Int = 5
 }
